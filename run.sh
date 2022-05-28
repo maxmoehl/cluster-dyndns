@@ -6,7 +6,7 @@ function log() {
   echo "[$(date)] ${1}"
 }
 
-OLD_IP="$(kubectl -n "${NAMESPACE}" get configmap dyndns -o jsonpath='{.data.ip}')"
+OLD_IP="$(kubectl -n "${NAMESPACE}" get configmap "${CONFIG_MAP}" -o jsonpath='{.data.ip}')"
 log "old ip    : ${OLD_IP}"
 
 IP="$(curl -s https://api.ipify.org)"
@@ -39,6 +39,6 @@ aws route53 change-resource-record-sets \
 
 log "writing ip to config map"
 export IP
-kubectl -n "${NAMESPACE}" get configmap dyndns -o json | jq '.data.ip = env.IP' | kubectl apply -f -
+kubectl -n "${NAMESPACE}" get configmap "${CONFIG_MAP}" -o json | jq '.data.ip = env.IP' | kubectl apply -f -
 
 log "done"
