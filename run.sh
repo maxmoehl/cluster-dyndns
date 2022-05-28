@@ -3,10 +3,10 @@
 set -e
 
 function log() {
-  echo "[$(date --iso-8601=ns)] ${1}"
+  echo "[$(date)] ${1}"
 }
 
-OLD_IP="$(cat /usr/local/etc/dyndns/ip)"
+OLD_IP="$(kubectl -n "${NAMESPACE}" get configmap dyndns -o jsonpath='{.data.ip}')"
 log "old ip    : ${OLD_IP}"
 
 IP="$(curl -s https://api.ipify.org)"
