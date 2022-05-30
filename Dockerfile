@@ -1,4 +1,4 @@
-FROM python:3-alpine
+FROM docker.io/library/python:3-alpine
 
 RUN pip install awscli && \
     pip cache purge && \
