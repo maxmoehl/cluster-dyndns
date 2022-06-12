@@ -9,7 +9,7 @@ function log() {
 OLD_IP="$(kubectl -n "${NAMESPACE}" get configmap "${CONFIG_MAP}" -o jsonpath='{.data.ip}')"
 log "old ip    : ${OLD_IP}"
 
-IP="$(curl -s https://api.ipify.org)"
+IP="$(curl -sf https://api.ipify.org)"
 log "current ip: ${IP}"
 
 if [[ "${IP}" == "${OLD_IP}" ]]; then
